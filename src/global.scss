@@ -24,3 +24,20 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.fondo {
+    background: #eeeeee;
+    background-color: #eeeeee;
+    --ion-background-color: #eeeeee;
+  }
+.fondoblanco {
+    background: #ffffff;
+     background-color: #ffffff;
+    --ion-background-color: #ffffff;
+  }
+
+.fondonegro {
+    background: #000000;
+     background-color: #000000;
+    --ion-background-color: #000000;
+  }
