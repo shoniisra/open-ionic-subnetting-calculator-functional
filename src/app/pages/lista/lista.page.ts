@@ -61,7 +61,7 @@ export class ListaPage {
       header: "Autor:",
 
       message:
-        ' Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://github.com/shoniisra" color="light">Johnny Villacís</a>',
+        ' Hecho con <ion-icon name="heart"></ion-icon> ',
       buttons: ["OK"]
     });
 
@@ -182,25 +182,76 @@ export class ListaPage {
     this.inicializar();
   }
   CalcularDireccionRed(ipactual, salto) {
-    ipactual[3] += salto;
-    if (ipactual[3] > 255) {
-      this.val = ipactual[3] / 256;
-      ipactual[2] += Math.round(this.val);
-      ipactual[3] = 0;
+    // if(salto>256){
+    //   var espacio=salto%255;
+    // }
+    if(salto>255){
+      var diferencia=Math.trunc(salto/256);
+      var mysalto=salto%256;
+      // console.log(salto+"  "+diferencia+"  "+mysalto);
+      for (let index = 1; index <= diferencia; index++) {      
+        ipactual[3] += 256;
+        if (ipactual[3] > 255) {
+          this.val = ipactual[3] / 256;
+          ipactual[2] += Math.round(this.val);
+          ipactual[3] = 0;
+        }
+        if (ipactual[2] > 255) {
+          this.val = ipactual[2] / 256;
+          ipactual[1] += Math.round(this.val);
+          ipactual[2] = 0;
+          ipactual[3] = 0;
+        }
+        if (ipactual[1] > 255) {
+          this.val = ipactual[1] / 256;
+          ipactual[0] += Math.round(this.val);
+          ipactual[1] = 0;
+          ipactual[2] = 0;
+          ipactual[3] = 0;
+        }
+        // console.log("vuelta "+index+" "+ipactual);
+      }
+      ipactual[3] += mysalto;
+      if (ipactual[3] > 255) {
+        this.val = ipactual[3] / 256;
+        ipactual[2] += Math.round(this.val);
+        ipactual[3] = 0;
+      }
+      if (ipactual[2] > 255) {
+        this.val = ipactual[2] / 256;
+        ipactual[1] += Math.round(this.val);
+        ipactual[2] = 0;
+        ipactual[3] = 0;
+      }
+      if (ipactual[1] > 255) {
+        this.val = ipactual[1] / 256;
+        ipactual[0] += Math.round(this.val);
+        ipactual[1] = 0;
+        ipactual[2] = 0;
+        ipactual[3] = 0;
+      }
+    }else{
+      ipactual[3] += salto;
+      if (ipactual[3] > 255) {
+        this.val = ipactual[3] / 256;
+        ipactual[2] += Math.round(this.val);
+        ipactual[3] = 0;
+      }
+      if (ipactual[2] > 255) {
+        this.val = ipactual[2] / 256;
+        ipactual[1] += Math.round(this.val);
+        ipactual[2] = 0;
+        ipactual[3] = 0;
+      }
+      if (ipactual[1] > 255) {
+        this.val = ipactual[1] / 256;
+        ipactual[0] += Math.round(this.val);
+        ipactual[1] = 0;
+        ipactual[2] = 0;
+        ipactual[3] = 0;
+      }
     }
-    if (ipactual[2] > 255) {
-      this.val = ipactual[2] / 256;
-      ipactual[1] += Math.round(this.val);
-      ipactual[2] = 0;
-      ipactual[3] = 0;
-    }
-    if (ipactual[1] > 255) {
-      this.val = ipactual[1] / 256;
-      ipactual[0] += Math.round(this.val);
-      ipactual[1] = 0;
-      ipactual[2] = 0;
-      ipactual[3] = 0;
-    }
+    
     return ipactual;
   }
 
@@ -238,8 +289,8 @@ export class ListaPage {
       for (let i = 0; i < this.equivalencias.length; i++) {
         if (this.hsolitados[index] <= this.equivalencias[i] - 2) {
           //numero--hsolicitados--hencontrados--direcciondered -- mascara-- primeraip--ultimaip
-          console.log(this.direccion);
-          console.log(this.cambio);
+          // console.log(this.direccion);
+          // console.log(this.cambio);
           this.direccion = this.CalcularDireccionRed(
             [...this.direccion],
             this.cambio
@@ -271,6 +322,6 @@ export class ListaPage {
         }
       }
     }
-    console.log(this.myvalor);
+    // console.log(this.myvalor);
   }
 }

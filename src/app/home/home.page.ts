@@ -92,7 +92,7 @@ export class HomePage {
       header: "Autor:",
 
       message:
-        ' Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://github.com/shoniisra" color="light">Johnny Villacís</a>',
+        ' Hecho con <ion-icon name="heart"></ion-icon> ',
       buttons: ["OK"]
     });
 
