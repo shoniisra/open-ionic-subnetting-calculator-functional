@@ -34,6 +34,8 @@ export class HomePage {
   subnetting2;
   subnetting3;
   subnetting4;
+  sb = true;
+  mf = false;
 
   firstIpAux1;
   firstIpAux2;
@@ -56,6 +58,29 @@ export class HomePage {
   octetos;
   tipo = "";
   myvalor = [];
+  equivalencias = [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    262144,
+    524288,
+    1048576
+  ];
 
   constructor(
     public alertController: AlertController,
@@ -74,17 +99,27 @@ export class HomePage {
     await alert.present();
   }
 
-  async presentErrorAlert() {
+  async presentErrorAlert(mystr) {
     const alert = await this.alertController.create({
       header: "Error al Calcular",
 
-      message: "Datos erróneos, No se puede calcular",
+      message: mystr,
       buttons: ["Aceptar"]
     });
 
     await alert.present();
   }
 
+  cambio(e) {
+    if (e.detail.value == 1) {
+      this.sb = true;
+      this.mf = false;
+    } else {
+      this.mf = true;
+      this.sb = false;
+    }
+    this.validaNetmask();
+  }
   async toastIp() {
     const toast = await this.toastController.create({
       message: "La dirección Ip que desea subnetear, ejemplo: 192.168.4.32",
@@ -131,6 +166,9 @@ export class HomePage {
     } else {
       this.finvalida = false;
     }
+    if (this.sb) {
+      this.finvalida = false;
+    }
   }
 
   getIpNetmask() {
@@ -163,8 +201,7 @@ export class HomePage {
     // this.finalNetmask.min=this.firstNetmask;
     //el mínimo de la netmask de destino es la netmask por default
   }
-  inicializar(){
-
+  inicializar() {
     this.subnettingAux1 = 0;
     this.subnettingAux2 = 0;
     this.subnettingAux3 = 0;
@@ -192,7 +229,6 @@ export class HomePage {
 
     this.total = 1; //variable que dice cuántas redes hay
     this.vali = 0;
-
   }
   Limpiar() {
     //Variables Front End
@@ -204,7 +240,6 @@ export class HomePage {
 
     this.ipvalida = true;
     this.inicializar();
-   
   }
 
   Calcular() {
@@ -214,7 +249,7 @@ export class HomePage {
       this.ipvalida == true ||
       this.finvalida == true
     ) {
-      this.presentErrorAlert();
+      this.presentErrorAlert("Datos erróneos, No se puede calcular");
       return;
     }
 
@@ -223,17 +258,31 @@ export class HomePage {
 
     this.finalBitsHost = 32 - this.finalNetmask;
     this.finalIpNumber = Math.pow(2, this.finalBitsHost); //numero de host en la netmask final
+    if (this.mf) {
+      this.subnettingNumber = this.firstIpNumber / this.finalIpNumber; //numero de subredes creadas
+      this.subnettingSize = this.firstIpNumber / this.subnettingNumber;//numero de host en cada subred
+    }else{
+      var subnettingSize = this.firstIpNumber / this.subnettingNumber;
+      for (let index = 0; index < this.equivalencias.length; index++) {
+        if(this.equivalencias[index]>=subnettingSize){
+          this.subnettingSize=this.equivalencias[index];//numero de host en cada subred
+          this.finalNetmask=32-index;
+          break;
+        }
+      }
+      
 
-    this.subnettingNumber = this.firstIpNumber / this.finalIpNumber; //numero de subredes creadas
-    this.subnettingSize = this.firstIpNumber / this.subnettingNumber; //numero de host en cada subred
+    }
 
+    if (this.subnettingNumber > 1000) {
+      this.presentErrorAlert(
+        "Detenido en 1000 subnets, HOST existentes: " + this.subnettingNumber
+      );
+      this.subnettingNumber = 1000;
+    }
     this.octetos = this.ipAdress.split(".");
 
     this.inicializar();
-    if(this.subnettingNumber>1000){
-      alert("Detenido en 1000 subnets, HOST existentes: "+this.subnettingNumber);
-      this.subnettingNumber=1000;
-    }
 
     for (let i = 1; i <= this.subnettingNumber; i++) {
       this.subnettingAux4 += this.subnettingSize;

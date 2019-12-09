@@ -60,7 +60,7 @@
         <ion-icon name="help"></ion-icon>
       </ion-badge>
       <ion-label position="stacked">
-        NETMASK INICIAL (ejem: 24):
+        MÁSCARA INICIAL (ejem: 24):
       </ion-label>
       <ion-input
         required
@@ -73,13 +73,67 @@
         max="30"
       ></ion-input>
     </ion-item>
-
     <ion-item>
+         <ion-list>
+      <ion-radio-group (ionChange)="cambio($event)">
+       <ion-label position="stacked">OPCIONES DE CALCULO :</ion-label>
+        <ion-item>
+          <ion-label>Subredes</ion-label>
+          <ion-radio slot="start" value=1 checked></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Máscara Final</ion-label>
+          <ion-radio slot="start" value=0></ion-radio>
+        </ion-item>
+        
+      </ion-radio-group>
+    </ion-list>
+    </ion-item>
+
+    <ion-item *ngIf="sb">
       <ion-badge slot="end" (click)="toastNetFin()" color="primary">
         <ion-icon name="help"></ion-icon>
       </ion-badge>
       <ion-label position="stacked">
-        NETMASK FINAL (ejem:30)
+        SUBREDES A CALCULAR:
+      </ion-label>
+      <ion-select placeholder="Seleccione uno"  [(ngModel)]="subnettingNumber">
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+        <ion-select-option value="4">4</ion-select-option>
+        <ion-select-option value="8">8</ion-select-option>
+        <ion-select-option value="16">16</ion-select-option>
+        <ion-select-option value="32">32</ion-select-option>
+        <ion-select-option value="64">64</ion-select-option>
+        <ion-select-option value="128">128</ion-select-option>
+        <ion-select-option value="256">256</ion-select-option>
+        <ion-select-option value="512">512</ion-select-option>
+        <ion-select-option value="1024">1024</ion-select-option>
+        <ion-select-option value="2048">2048</ion-select-option>
+        <ion-select-option value="4096">4096</ion-select-option>
+        <ion-select-option value="8192">8192</ion-select-option>
+        <ion-select-option value="16384">16384</ion-select-option>
+      </ion-select>
+      <!-- <ion-input
+        required
+       placeholder="999"
+        type="number"
+        color="primary"
+        clearInput
+        [(ngModel)]="subnettingNumber"
+        step="1"
+        max="999"
+        [min]="0"
+      ></ion-input> -->
+    </ion-item>
+
+    <ion-item *ngIf="mf">
+      <ion-badge slot="end" (click)="toastNetFin()" color="primary">
+        <ion-icon name="help"></ion-icon>
+      </ion-badge>
+      <ion-label position="stacked">
+        MÁSCARA FINAL (ejem:30)
       </ion-label>
       <ion-input
         required
