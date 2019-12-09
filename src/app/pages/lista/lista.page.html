@@ -1,9 +1,198 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>lista</ion-title>
+<ion-header mode="ios" no-border translucent="true">
+  <ion-toolbar mode="ios">
+    <ion-title (click)="presentAlert()" color="primary">
+      SUBNETEO VLSM</ion-title
+    >
   </ion-toolbar>
 </ion-header>
+<ion-content class="fondo">
+  <ion-card class="fondoblanco mysize2" *ngIf="!myvalor[0]">
+    <img src="../../assets/internet2.png" />
+  </ion-card>
 
-<ion-content>
+  <ion-card class="fondoblanco mysize" *ngIf="!myvalor[0]">
+    <ion-item>
+      <ion-badge slot="end" (click)="toastIp()" color="primary">
+        <ion-icon name="help"></ion-icon
+      ></ion-badge>
+      <ion-label position="stacked">
+        DIRECCION IP:
+      </ion-label>
+      <ion-input
+        placeholder="xxx.xxx.xxx.xx"
+        required
+        color="primary"
+        type="string"
+        (ionChange)="getIpNetmask()"
+        clearInput
+        [(ngModel)]="ipAdress"
+        pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"
+      ></ion-input>
+    </ion-item>
+    <ion-label *ngIf="ipvalida" color="danger"
+      >Dirección IP no válida</ion-label
+    >
+    <ion-item>
+      <ion-badge slot="end" (click)="toastRed()" color="primary">
+        <ion-icon name="help"></ion-icon>
+      </ion-badge>
 
+      <ion-label position="stacked">
+        TIPO DE RED:
+      </ion-label>
+      <ion-input
+        required
+        readonly
+        type="string"
+        color="primary"
+        clearInput
+        [(ngModel)]="tipo"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-badge slot="end" (click)="toastNetInicio()" color="primary">
+        <ion-icon name="help"></ion-icon>
+      </ion-badge>
+      <ion-label position="stacked">
+        NETMASK INICIAL (ejem: 24):
+      </ion-label>
+      <ion-input
+        required
+        readonly
+        type="number"
+        color="primary"
+        clearInput
+        [(ngModel)]="firstNetmask"
+        step="1"
+        max="30"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-badge slot="end" (click)="toastNetFin()" color="primary">
+        <ion-icon name="help"></ion-icon>
+      </ion-badge>
+      <ion-label position="stacked">
+        HOST SOLICITADOS
+      </ion-label>
+      <ion-input
+        placeholder="Ejemplo: 60,120,10,24"
+        required
+        type="string"
+        (ionChange)="validaListaHost()"
+        color="primary"
+        clearInput
+        [(ngModel)]="listahost"
+        step="1"
+        max="30"
+      ></ion-input>
+    </ion-item>
+    <ion-label *ngIf="finvalida" color="danger"
+      >Separe el numero de host con comas</ion-label
+    >
+  </ion-card>
+  <!-- numero--hsolicitados--hencontrados--direcciondered -- mascara-- primeraip--ultimaip -->
+  <ion-card class="fondoblanco" *ngIf="myvalor[0]">
+    <ion-card-content class="sinborde" *ngFor="let item of myvalor">
+      <ion-item>
+        <ion-label color="warning" class="ion-text-justify">
+          # SUBRED:
+        </ion-label>
+        <ion-label> {{item[0]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Host Solicitados:
+        </ion-label>
+        <ion-label> {{item[1]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Host Encontrados:
+        </ion-label>
+        <ion-label> {{item[2]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Dirección de Red
+        </ion-label>
+        <ion-label> {{item[3]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Máscara
+        </ion-label>
+        <ion-label> {{item[4]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Primera IP util
+        </ion-label>
+        <ion-label> {{item[5]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Última IP util
+        </ion-label>
+        <ion-label> {{item[6]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" class="ion-text-justify">
+          Broadcast
+        </ion-label>
+        <ion-label> {{item[7]}}</ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+<ion-footer>
+  <ion-toolbar *ngIf="!myvalor[0]">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="6">
+          <ion-button
+            (click)="Calcular()"
+            shape="round"
+            fill="outline"
+            expand="full"
+            color="primary"
+          >
+            <ion-icon name="flash"></ion-icon>
+            CALCULAR</ion-button
+          >
+        </ion-col>
+        <ion-col size="6">
+          <ion-button
+            (click)="Limpiar()"
+            shape="round"
+            fill="outline"
+            expand="full"
+            color="danger"
+          >
+            <ion-icon name="trash"></ion-icon>
+            LIMPIAR</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="myvalor[0]">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12">
+          <ion-button
+            (click)="Limpiar()"
+            shape="round"
+            fill="outline"
+            expand="full"
+            color="danger"
+          >
+            <ion-icon name="trash"></ion-icon>
+            LIMPIAR</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
