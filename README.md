@@ -16,6 +16,9 @@
     <br> 
 </p>
 
+##  IMPORTANTE 
+El instalador (.apk) de la última version se encuentra en el proyecto como app-debug.apk , se recomienda instalar y probarlo.
+
 ## 🎉 Software Requerido
 <ul>
 <li><a href="https://nodejs.org/en/download/">node </a></li>
