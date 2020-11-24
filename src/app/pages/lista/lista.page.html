@@ -1,23 +1,24 @@
-<ion-header mode="ios" no-border translucent="true">
-  <ion-toolbar mode="ios">
-    <ion-title (click)="presentAlert()" color="primary">
-      SUBNETEO VLSM</ion-title
+<ion-header mode="md" no-border translucent="true">
+  <ion-toolbar mode="md" class="fondo">
+    <ion-title (click)="presentAlert()" color="light">
+      SUBNET CALCULATOR PRO</ion-title
     >
-    <ion-button slot="end" color="light"  routerLink="/home" routerDirection="root"
-    shape="round"
-    fill="outline"
-    expand="full"
-  >
-  <ion-icon name="albums" color="primary"></ion-icon>
-    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" value="v">
+      <ion-segment-button value="s" routerLink="/home" routerDirection="root">
+        <ion-label>Subnet</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="v" routerLink="/lista" routerDirection="root">
+        <ion-label>VLSM</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content class="fondo">
-  <ion-card class="fondoblanco mysize2" *ngIf="!myvalor[0]">
-    <img src="../../assets/internet2.png" />
-  </ion-card>
 
-  <ion-card class="fondoblanco mysize" *ngIf="!myvalor[0]">
+<ion-content class="fondocomun">
+  <ion-card class="fondoblanco" *ngIf="!myvalor[0]">
     <ion-item>
       <ion-badge slot="end" (click)="toastIp()" color="primary">
         <ion-icon name="help"></ion-icon
@@ -75,13 +76,14 @@
         max="30"
       ></ion-input>
     </ion-item>
-
+  </ion-card>
+  <ion-card class="fondoblanco" *ngIf="!myvalor[0]">
     <ion-item>
       <ion-badge slot="end" (click)="toastNetFin()" color="primary">
         <ion-icon name="help"></ion-icon>
       </ion-badge>
       <ion-label position="stacked">
-        HOST SOLICITADOS
+        HOST SOLICITADOS:
       </ion-label>
       <ion-input
         placeholder="Ejemplo: 60,120,10,24"

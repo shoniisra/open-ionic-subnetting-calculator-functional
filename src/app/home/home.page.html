@@ -1,28 +1,35 @@
-<ion-header mode="ios" no-border translucent="true">
-  <ion-toolbar mode="ios">
-    <ion-title (click)="presentAlert()" color="primary"> SUBNETEO</ion-title>
-    <ion-button slot="end" color="light"  routerLink="/lista" routerDirection="root"
-    shape="round"
-    fill="outline"
-    expand="full"
-  >
-  <ion-icon name="albums" color="primary"></ion-icon>
-    </ion-button>
+<ion-header mode="md" no-border translucent="true">
+  <ion-toolbar mode="md" class="fondo">
+    <ion-title (click)="presentAlert()" color="light">
+      SUBNET CALCULATOR PRO</ion-title
+    >
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" value="s">
+      <ion-segment-button value="s" routerLink="/home" routerDirection="root">
+        <ion-label>Subnet</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="v" routerLink="/lista" routerDirection="root">
+        <ion-label>VLSM</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content class="fondo">
-  <ion-card class="fondoblanco mysize2" *ngIf="!myvalor[0]">
-    <img src="../../assets/internet.jpg" />
-  </ion-card>
 
-  <ion-card class="fondoblanco mysize" *ngIf="!myvalor[0]">
+<ion-content class="fondocomun">
+  <!-- Default Segment -->
+
+  <!-- <ion-card class="fondoblanco mysize2" *ngIf="!myvalor[0]">
+    <img src="../../assets/internet.jpg" />
+  </ion-card> -->
+
+  <ion-card class="fondoblanco" *ngIf="!myvalor[0]">
     <ion-item>
       <ion-badge slot="end" (click)="toastIp()" color="primary">
         <ion-icon name="help"></ion-icon
       ></ion-badge>
-      <ion-label position="stacked">
-        DIRECCION IP:
-      </ion-label>
+      <ion-label position="stacked"> DIRECCION IP: </ion-label>
       <ion-input
         placeholder="xxx.xxx.xxx.xx"
         required
@@ -42,9 +49,7 @@
         <ion-icon name="help"></ion-icon>
       </ion-badge>
 
-      <ion-label position="stacked">
-        TIPO DE RED:
-      </ion-label>
+      <ion-label position="stacked"> TIPO DE RED: </ion-label>
       <ion-input
         required
         readonly
@@ -59,9 +64,7 @@
       <ion-badge slot="end" (click)="toastNetInicio()" color="primary">
         <ion-icon name="help"></ion-icon>
       </ion-badge>
-      <ion-label position="stacked">
-        MÁSCARA INICIAL (ejem: 24):
-      </ion-label>
+      <ion-label position="stacked"> MÁSCARA INICIAL (ejem: 24): </ion-label>
       <ion-input
         required
         readonly
@@ -73,32 +76,32 @@
         max="30"
       ></ion-input>
     </ion-item>
+  </ion-card>
+  <ion-card class="fondoblanco" *ngIf="!myvalor[0]">
     <ion-item>
-         <ion-list>
-      <ion-radio-group (ionChange)="cambio($event)">
-       <ion-label position="stacked">OPCIONES DE CALCULO :</ion-label>
-        <ion-item>
-          <ion-label>Subredes</ion-label>
-          <ion-radio slot="start" value=1 checked></ion-radio>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label>Máscara Final</ion-label>
-          <ion-radio slot="start" value=0></ion-radio>
-        </ion-item>
-        
-      </ion-radio-group>
-    </ion-list>
-    </ion-item>
+      <ion-label position="stacked">OPCIONES DE CALCULO :</ion-label>
+      <ion-card-content>
+        <ion-radio-group (ionChange)="cambio($event)">
+          <ion-item>
+            <ion-label>Subredes</ion-label>
+            <ion-radio slot="start" value="1" checked></ion-radio>
+          </ion-item>
 
+          <ion-item>
+            <ion-label>Máscara Final</ion-label>
+            <ion-radio slot="start" value="0"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-card-content>
+    </ion-item>
+  </ion-card>
+  <ion-card class="fondoblanco" *ngIf="!myvalor[0]">
     <ion-item *ngIf="sb">
       <ion-badge slot="end" (click)="toastNetFin()" color="primary">
         <ion-icon name="help"></ion-icon>
       </ion-badge>
-      <ion-label position="stacked">
-        SUBREDES A CALCULAR:
-      </ion-label>
-      <ion-select placeholder="Seleccione uno"  [(ngModel)]="subnettingNumber">
+      <ion-label position="stacked"> SUBREDES A CALCULAR: </ion-label>
+      <ion-select placeholder="Seleccione uno" [(ngModel)]="subnettingNumber">
         <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="2">2</ion-select-option>
         <ion-select-option value="4">4</ion-select-option>
@@ -132,9 +135,7 @@
       <ion-badge slot="end" (click)="toastNetFin()" color="primary">
         <ion-icon name="help"></ion-icon>
       </ion-badge>
-      <ion-label position="stacked">
-        MÁSCARA FINAL (ejem:30)
-      </ion-label>
+      <ion-label position="stacked"> MÁSCARA FINAL (ejem:30) </ion-label>
       <ion-input
         required
         (ionChange)="validaNetmask()"
@@ -161,43 +162,41 @@
         <ion-label> {{item[0]}}</ion-label>
       </ion-item>
       <ion-item>
-          <ion-label color="primary" class="ion-text-justify">
-              Network:
-            </ion-label>
-        <ion-label>  {{item[1]}} / {{finalNetmask}}</ion-label>
+        <ion-label color="primary" class="ion-text-justify">
+          Network:
+        </ion-label>
+        <ion-label> {{item[1]}} / {{finalNetmask}}</ion-label>
       </ion-item>
       <ion-item>
-          <ion-label color="primary" class="ion-text-justify">
-              Host Mínimo
-            </ion-label>
+        <ion-label color="primary" class="ion-text-justify">
+          Host Mínimo
+        </ion-label>
         <ion-label> {{item[2]}}</ion-label>
       </ion-item>
       <ion-item>
-          <ion-label color="primary" class="ion-text-justify">
-              Host Máximo
-            </ion-label>
+        <ion-label color="primary" class="ion-text-justify">
+          Host Máximo
+        </ion-label>
         <ion-label> {{item[3]}}</ion-label>
       </ion-item>
       <ion-item>
-          <ion-label color="primary" class="ion-text-justify">
-              Broadcast
-            </ion-label>
+        <ion-label color="primary" class="ion-text-justify">
+          Broadcast
+        </ion-label>
         <ion-label> {{item[4]}}</ion-label>
       </ion-item>
       <ion-item>
-          <ion-label color="primary" class="ion-text-justify">
-              Hosts/Net
-            </ion-label>
+        <ion-label color="primary" class="ion-text-justify">
+          Hosts/Net
+        </ion-label>
         <ion-label> {{item[5]}}</ion-label>
       </ion-item>
-
-     
     </ion-card-content>
   </ion-card>
 </ion-content>
 <ion-footer>
   <ion-toolbar *ngIf="!myvalor[0]">
-    <ion-grid class="ion-no-padding">
+     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size="6">
           <ion-button
@@ -205,7 +204,8 @@
             shape="round"
             fill="outline"
             expand="full"
-            color="primary"
+            class="fondo"
+            text-color="white"
           >
             <ion-icon name="flash"></ion-icon>
             CALCULAR</ion-button
@@ -220,7 +220,7 @@
             color="danger"
           >
             <ion-icon name="trash"></ion-icon>
-            LIMPIAR</ion-button
+            BORRAR</ion-button
           >
         </ion-col>
       </ion-row>

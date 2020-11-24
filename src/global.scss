@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -26,21 +26,30 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 .fondo {
-    background: #eeeeee;
-    background-color: #eeeeee;
-    --ion-background-color: #eeeeee;
-  }
+  // background: #eeeeee;
+  // background-color: #eeeeee;
+  // --ion-background-color: #eeeeee;
+
+  --background: linear-gradient(#FD6897, #F77063);
+  --background-color:linear-gradient(#FD6897, #F77063) !important;
+  --ion-background-color:linear-gradient(#FD6897, #F77063) !important;
+}
 .fondoblanco {
-    background: #ffffff;
-     background-color: #ffffff;
-    --ion-background-color: #ffffff;
-  }
+  background: #ffffff;
+  background-color: #ffffff;
+  --ion-background-color: #ffffff;
+}
+.fondocomun {
+  background: #eeeeee;
+  background-color: #eeeeee;
+  --ion-background-color: #eeeeee;
+}
 
 .fondonegro {
-    background: #000000;
-     background-color: #000000;
-    --ion-background-color: #000000;
-  }
-  .sinborde{
-    border: none !important;
-  }
+  background: #000000;
+  background-color: #000000;
+  --ion-background-color: #000000;
+}
+.sinborde {
+  border: none !important;
+}
