@@ -61,7 +61,7 @@ export class ListaPage {
       header: "Autor:",
 
       message:
-        ' Hecho con <ion-icon name="heart"></ion-icon> ',
+        ' Hecho por Shoniisra con <ion-icon name="heart"></ion-icon> ',
       buttons: ["OK"]
     });
 

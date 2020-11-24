@@ -34,6 +34,16 @@
   --background-color:linear-gradient(#FD6897, #F77063) !important;
   --ion-background-color:linear-gradient(#FD6897, #F77063) !important;
 }
+.fondoboton {
+  // background: #eeeeee;
+  // background-color: #eeeeee;
+  // --ion-background-color: #eeeeee;
+
+  --background: linear-gradient(#FD6897, #F77063);
+  --background-color:linear-gradient(#FD6897, #F77063) !important;
+  --ion-background-color:linear-gradient(#FD6897, #F77063) !important;
+  color:white;
+}
 .fondoblanco {
   background: #ffffff;
   background-color: #ffffff;
